@@ -9,6 +9,7 @@ namespace Data
         public int  Col       { get; private set; }
         public int  Row       { get; private set; }
         public bool HasMarked { get; private set; }
+        public bool IsChecked { get; private set; }
         
         private List<TileData> _neighbourTiles;
         
@@ -29,6 +30,16 @@ namespace Data
         public void Unmark()
         {
             HasMarked = false;
+        }
+        
+        public void Check()
+        {
+            IsChecked = true;
+        }
+        
+        public void Uncheck()
+        {
+            IsChecked = false;
         }
 
         public void AddNeighbourTile(TileData tileData)

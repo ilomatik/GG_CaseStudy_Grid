@@ -1,24 +1,30 @@
+using System.Collections.Generic;
 using Data;
 using Events;
+using GameVariable;
+using Holders;
+using UnityEngine;
 using View;
 
 namespace Controllers
 {
     public class GameController
     {
-        private GameData _data;
-        private GameView _view;
+        private GameData      _data;
+        private GameView      _view;
+        private GameVariables _variables;
 
         private int _colCount;
         private int _rowCount;
 
-        public GameController(GameView gameView, int colCount, int rowCount)
+        public GameController(GameView gameView, GameVariables variables)
         {
-            _data = new GameData();
-            _view = gameView;
+            _data      = new GameData();
+            _view      = gameView;
+            _variables = variables;
 
-            _colCount = colCount;
-            _rowCount = rowCount;
+            _colCount = _variables.ColCount;
+            _rowCount = _variables.RowCount;
         }
 
         public void SubscribeEvents()
@@ -35,6 +41,7 @@ namespace Controllers
         {
             _data.Initialize(_colCount, _rowCount);
             _view.Initialize(_colCount, _rowCount);
+            _view.SetTileDurations(_variables.MarkedScaleUpDuration, _variables.MarkedScaleDownDuration);
 
             int tileId = 0;
             
@@ -56,6 +63,24 @@ namespace Controllers
             
             _data.MarkTile(col, row);
             _view.MarkTile(col, row);
+            
+            CheckWinCondition(col, row);
+        }
+        
+        private void CheckWinCondition(int col, int row)
+        {
+            MarkedTilesHolder markedTiles      = _data.GetMarkedTiles(col, row);
+            int               markedTilesCount = markedTiles.MarkedTilesCount;
+
+            if (markedTilesCount < _variables.UnmarkLimit) return;
+            
+            for (int m = 0; m < markedTilesCount; m++)
+            {
+                MarkedTile markedTile = markedTiles.GetMarkedTileByIndex(m);
+                
+                _data.UnmarkTile(markedTile.Col, markedTile.Row);
+                _view.UnmarkTile(markedTile.Col, markedTile.Row);
+            }
         }
     }
 }

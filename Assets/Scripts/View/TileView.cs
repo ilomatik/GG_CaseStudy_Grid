@@ -11,6 +11,10 @@ namespace View
         public int Id  { get; private set; }
         public int Col { get; private set; }
         public int Row { get; private set; }
+
+        private float _scaleUpDuration;
+        private float _scaleDownDuration;
+        private Tween _tileTween;
         
         private Action<int, int> _onTileClicked;
 
@@ -23,22 +27,47 @@ namespace View
             _onTileClicked = onTileClicked;
         }
         
+        public void SetDurations(float scaleUpDuration, float scaleDownDuration)
+        {
+            _scaleUpDuration   = scaleUpDuration;
+            _scaleDownDuration = scaleDownDuration;
+        }
+        
         public void Mark()
         {
-            _markObject.transform.DOScale(Vector3.one, 0.1f)
-                                 .SetEase(Ease.InOutBounce);
+            if (_tileTween != null)
+            {
+                _tileTween.Kill();
+                _tileTween = null;
+            }
+
+            _tileTween = _markObject.transform.DOScale(Vector3.one, _scaleUpDuration)
+                                              .SetEase(Ease.InOutBounce);
         }
         
         public void Unmark()
         {
-            _markObject.transform.DOScale(Vector3.zero, 0.1f)
-                                 .SetEase(Ease.InOutBounce);
+            if (_tileTween != null)
+            {
+                _tileTween.Kill();
+                _tileTween = null;
+            }
+            
+            _tileTween = _markObject.transform.DOScale(Vector3.zero, _scaleDownDuration)
+                                              .SetEase(Ease.InOutBounce);
         }
 
         private void OnMouseDown()
         {
-            Debug.Log($"TileView{Id} OnMouseEnter");
             _onTileClicked?.Invoke(Col, Row);
+        }
+        
+        private void OnDestroy()
+        {
+            if (_tileTween == null) return;
+            
+            _tileTween.Kill();
+            _tileTween = null;
         }
     }
 }
