@@ -17,10 +17,8 @@ namespace View
         {
             _tileViews = new TileView[colCount, rowCount];
             
-            float offsetX = colCount / 2f;
-            float offsetZ = rowCount / 2f;
-            
-            _tilesParent.position = new Vector3(-offsetX, 0, -offsetZ);
+            SetTileParentPosition(colCount, rowCount);
+            SetCameraPosition(colCount, rowCount);
         }
         
         public void SetTileDurations(float tileScaleUpDuration, float tileScaleDownDuration)
@@ -54,6 +52,20 @@ namespace View
         private void OnTileClicked(int col, int row)
         {
             ViewEvents.TileClicked(col, row);
+        }
+        
+        private void SetTileParentPosition(int colCount, int rowCount)
+        {
+            float offsetX = colCount / 2f;
+            float offsetZ = rowCount / 2f;
+            
+            _tilesParent.position = new Vector3(-offsetX, 0, -offsetZ);
+        }
+        
+        private void SetCameraPosition(int colCount, int rowCount)
+        {
+            float cameraHeight = rowCount > (colCount * 2) ? rowCount : colCount * 2;
+            Camera.main.transform.position = new Vector3(-0.5f, cameraHeight, -0.5f);
         }
     }
 }
