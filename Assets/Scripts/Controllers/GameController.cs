@@ -36,12 +36,16 @@ namespace Controllers
             _data.Initialize(_colCount, _rowCount);
             _view.Initialize(_colCount, _rowCount);
 
+            int tileId = 0;
+            
             for (int c = 0; c < _colCount; c++)
             {
                 for (int r = 0; r < _rowCount; r++)
                 {
-                    _data.CreateTile(c, r);
-                    _view.CreateTile(c, r);
+                    _data.CreateTile(c, r, tileId);
+                    _view.CreateTile(c, r, tileId);
+                    
+                    tileId++;
                 }
             }
         }

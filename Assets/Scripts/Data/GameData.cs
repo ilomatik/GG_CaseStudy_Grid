@@ -15,10 +15,24 @@ namespace Data
             _tileData = new TileData[_colCount, _rowCount];
         }
 
-        public void CreateTile(int col, int row)
+        public void CreateTile(int col, int row, int id)
         {
-            TileData tileData = new TileData(col, row);
+            TileData tileData = new TileData(id, col, row);
             tileData.Unmark();
+            
+            if (col - 1 >= 0)
+            {
+                TileData neighbourTile = _tileData[col - 1, row];
+                tileData.AddNeighbourTile(neighbourTile);
+                neighbourTile.AddNeighbourTile(tileData);
+            }
+
+            if (row - 1 >= 0)
+            {
+                TileData neighbourTile = _tileData[col, row - 1];
+                tileData.AddNeighbourTile(neighbourTile);
+                neighbourTile.AddNeighbourTile(tileData);
+            }
 
             _tileData[col, row] = tileData;
         }

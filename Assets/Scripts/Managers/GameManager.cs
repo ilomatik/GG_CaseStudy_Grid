@@ -14,7 +14,8 @@ namespace Managers
         
         private void Start()
         {
-            GameView gameView = _gameView.GetComponent<GameView>();
+            GameObject view     = Instantiate(_gameView, Vector3.zero, Quaternion.identity);
+            GameView   gameView = view.GetComponent<GameView>();
             
             _gameController = new GameController(gameView, _colCount, _rowCount);
             _gameController.LoadLevel();

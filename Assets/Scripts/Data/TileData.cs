@@ -12,8 +12,9 @@ namespace Data
         
         private List<TileData> _neighbourTiles;
         
-        public TileData(int col, int row)
+        public TileData(int id, int col, int row)
         {
+            Id  = id;
             Col = col;
             Row = row;
             

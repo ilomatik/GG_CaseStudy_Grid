@@ -15,10 +15,12 @@ namespace View
             _tileViews = new TileView[colCount, rowCount];
         }
         
-        public void CreateTile(int col, int row)
+        public void CreateTile(int col, int row, int id)
         {
-            TileView tileView = Instantiate(_tilePrefab, _tilesParent);
-            tileView.SetId(col, row, OnTileClicked);
+            Vector3 position = new Vector3(col, 0, row);
+            
+            TileView tileView = Instantiate(_tilePrefab, position, Quaternion.identity, _tilesParent);
+            tileView.Initialize(id, col, row, OnTileClicked);
             
             _tileViews[col, row] = tileView;
         }
