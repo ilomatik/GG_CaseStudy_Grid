@@ -51,7 +51,7 @@ namespace View
             
             TileView tileView = Instantiate(_tilePrefab, _tilesParent);
             tileView.transform.localPosition = position;
-            tileView.Initialize(id, col, row, OnTileClicked);
+            tileView.Initialize(id, col, row, OnTileClicked, OnTileMarked, OnTileUnmarked);
             tileView.SetDurations(_tileScaleUpDuration, _tileScaleDownDuration);
             tileView.SetEases(_scaleUpEase, _scaleDownEase);
 
@@ -86,10 +86,20 @@ namespace View
         {
             _tileViews[col, row].Unmark();
         }
-        
+
         private void OnTileClicked(int col, int row)
         {
             ViewEvents.TileClicked(col, row);
+        }
+        
+        private void OnTileMarked(Vector3 position)
+        {
+            ViewEvents.TileMarked(position);
+        }
+        
+        private void OnTileUnmarked(Vector3 position)
+        {
+            ViewEvents.TileUnmarked(position);
         }
         
         private void SetTileParentPosition(int colCount, int rowCount)

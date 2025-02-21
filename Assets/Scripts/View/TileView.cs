@@ -20,14 +20,23 @@ namespace View
         private Tween _tileTween;
         
         private Action<int, int> _onTileClicked;
+        private Action<Vector3>  _onTileMarked;
+        private Action<Vector3>  _onTileUnmarked;
 
-        public void Initialize(int id, int col, int row, Action<int, int> onTileClicked)
+        public void Initialize(int id, 
+                               int col,
+                               int row, 
+                               Action<int, int> onTileClicked, 
+                               Action<Vector3> onTileMarked, 
+                               Action<Vector3> onTileUnmarked)
         {
             Id  = id;
             Col = col;
             Row = row;
             
-            _onTileClicked = onTileClicked;
+            _onTileClicked  = onTileClicked;
+            _onTileMarked   = onTileMarked;
+            _onTileUnmarked = onTileUnmarked;
         }
         
         public void SetDurations(float scaleUpDuration, float scaleDownDuration)
@@ -56,6 +65,7 @@ namespace View
             }
 
             _tileTween = _markObject.transform.DOScale(Vector3.one, _scaleUpDuration).SetEase(_scaleUpEase);
+            _onTileMarked?.Invoke(transform.position);
         }
         
         public void Unmark()
@@ -67,6 +77,7 @@ namespace View
             }
             
             _tileTween = _markObject.transform.DOScale(Vector3.zero, _scaleDownDuration).SetEase(_scaleDownEase);
+            _onTileUnmarked?.Invoke(transform.position);
         }
 
         private void OnMouseDown()
