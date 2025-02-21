@@ -9,12 +9,12 @@ namespace View
     {
         [SerializeField] private TileView  _tilePrefab;
         [SerializeField] private Transform _tilesParent;
-        [SerializeField] private Color     _startColor;
-        [SerializeField] private Color     _endColor;
 
         private TileView[,] _tileViews;
         private int         _colCount;
         private int         _rowCount;
+        private Color       _startColor;
+        private Color       _endColor;
         private Vector3     _tileScale;
         private float       _tileScaleUpDuration;
         private float       _tileScaleDownDuration;
@@ -31,6 +31,12 @@ namespace View
             
             SetTileParentPosition(_colCount, _rowCount);
             SetCameraPosition(_colCount, _rowCount);
+        }
+        
+        public void SetTileColors(Color startColor, Color endColor)
+        {
+            _startColor = startColor;
+            _endColor   = endColor;
         }
         
         public void SetTileDurations(float tileScaleUpDuration, float tileScaleDownDuration)

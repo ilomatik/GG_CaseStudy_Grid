@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d50f584ab74824ae625b90771203e6, type: 3}
   m_Name: GameVariables
   m_EditorClassIdentifier: 
-  _colCount: 5
-  _rowCount: 5
+  _colCount: 7
+  _rowCount: 7
   _unmarkLimit: 3
+  _startColor: {r: 0.9882878, g: 1, b: 0, a: 0}
+  _endColor: {r: 0, g: 0.17310214, b: 1, a: 0}
   _markedScaleUpDuration: 0.25
   _markedScaleDownDuration: 0.25
   _markedScaleUpEase: 28
