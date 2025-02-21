@@ -78,3 +78,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 5386967798556874193, guid: 2f3e925d0bb4b4642b356b5306de4908, type: 3}
   _tilesParent: {fileID: 2561944125291029781}
+  _startColor: {r: 0, g: 0.20736837, b: 1, a: 0}
+  _endColor: {r: 1, g: 0, b: 0.019001007, a: 0}

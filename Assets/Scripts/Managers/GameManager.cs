@@ -7,8 +7,9 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private GameObject    _gameView;
-        [SerializeField] private GameVariables _variables;
+        [SerializeField] private ParticleManager _particleManager;
+        [SerializeField] private GameObject      _gameView;
+        [SerializeField] private GameVariables   _variables;
         
         private GameController _gameController;
         
@@ -20,11 +21,13 @@ namespace Managers
             _gameController = new GameController(gameView, _variables);
             _gameController.LoadLevel();
             _gameController.SubscribeEvents();
+            _particleManager.SubscribeEvents();
         }
         
         private void OnDestroy()
         {
             _gameController.UnsubscribeEvents();
+            _particleManager.UnsubscribeEvents();
         }
     }
 }
