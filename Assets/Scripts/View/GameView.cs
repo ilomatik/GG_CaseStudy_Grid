@@ -9,6 +9,8 @@ namespace View
     {
         [SerializeField] private TileView  _tilePrefab;
         [SerializeField] private Transform _tilesParent;
+        [SerializeField] private Color     _startColor;
+        [SerializeField] private Color     _endColor;
 
         private TileView[,] _tileViews;
         private int         _colCount;
@@ -52,6 +54,11 @@ namespace View
             tileView.Initialize(id, col, row, OnTileClicked);
             tileView.SetDurations(_tileScaleUpDuration, _tileScaleDownDuration);
             tileView.SetEases(_scaleUpEase, _scaleDownEase);
+
+            // Calculate the color based on the position
+            float tile = (float)(col * _rowCount + row) / (_colCount * _rowCount - 1);
+            Color tileColor = Color.Lerp(_startColor, _endColor, tile);
+            tileView.SetColor(tileColor);
             
             tileView.transform.localScale = Vector3.zero;
             _tileViews[col, row] = tileView;
