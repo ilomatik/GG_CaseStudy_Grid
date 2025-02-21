@@ -14,6 +14,8 @@ namespace View
 
         private float _scaleUpDuration;
         private float _scaleDownDuration;
+        private Ease  _scaleUpEase;
+        private Ease  _scaleDownEase;
         private Tween _tileTween;
         
         private Action<int, int> _onTileClicked;
@@ -33,6 +35,12 @@ namespace View
             _scaleDownDuration = scaleDownDuration;
         }
         
+        public void SetEases(Ease scaleUpEase, Ease scaleDownEase)
+        {
+            _scaleUpEase   = scaleUpEase;
+            _scaleDownEase = scaleDownEase;
+        }
+        
         public void Mark()
         {
             if (_tileTween != null)
@@ -41,8 +49,7 @@ namespace View
                 _tileTween = null;
             }
 
-            _tileTween = _markObject.transform.DOScale(Vector3.one, _scaleUpDuration)
-                                              .SetEase(Ease.InOutBounce);
+            _tileTween = _markObject.transform.DOScale(Vector3.one, _scaleUpDuration).SetEase(_scaleUpEase);
         }
         
         public void Unmark()
@@ -53,8 +60,7 @@ namespace View
                 _tileTween = null;
             }
             
-            _tileTween = _markObject.transform.DOScale(Vector3.zero, _scaleDownDuration)
-                                              .SetEase(Ease.InOutBounce);
+            _tileTween = _markObject.transform.DOScale(Vector3.zero, _scaleDownDuration).SetEase(_scaleDownEase);
         }
 
         private void OnMouseDown()

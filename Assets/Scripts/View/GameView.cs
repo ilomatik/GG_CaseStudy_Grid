@@ -12,6 +12,8 @@ namespace View
         private TileView[,] _tileViews;
         private float       _tileScaleUpDuration;
         private float       _tileScaleDownDuration;
+        private Ease        _scaleUpEase;
+        private Ease        _scaleDownEase;
 
         public void Initialize(int colCount, int rowCount)
         {
@@ -27,6 +29,12 @@ namespace View
             _tileScaleDownDuration = tileScaleDownDuration;
         }
         
+        public void SetTileEases(Ease scaleUpEase, Ease scaleDownEase)
+        {
+            _scaleUpEase   = scaleUpEase;
+            _scaleDownEase = scaleDownEase;
+        }
+        
         public void CreateTile(int col, int row, int id)
         {
             Vector3 position = new Vector3(col, 0, row);
@@ -35,6 +43,7 @@ namespace View
             tileView.transform.localPosition = position;
             tileView.Initialize(id, col, row, OnTileClicked);
             tileView.SetDurations(_tileScaleUpDuration, _tileScaleDownDuration);
+            tileView.SetEases(_scaleUpEase, _scaleDownEase);
             
             _tileViews[col, row] = tileView;
         }

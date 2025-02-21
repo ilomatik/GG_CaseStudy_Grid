@@ -15,5 +15,7 @@ MonoBehaviour:
   _colCount: 5
   _rowCount: 5
   _unmarkLimit: 3
-  _markedScaleUpDuration: 0.15
-  _markedScaleDownDuration: 0.15
+  _markedScaleUpDuration: 0.25
+  _markedScaleDownDuration: 0.25
+  _markedScaleUpEase: 28
+  _markedScaleDownEase: 31

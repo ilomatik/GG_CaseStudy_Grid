@@ -42,6 +42,7 @@ namespace Controllers
             _data.Initialize(_colCount, _rowCount);
             _view.Initialize(_colCount, _rowCount);
             _view.SetTileDurations(_variables.MarkedScaleUpDuration, _variables.MarkedScaleDownDuration);
+            _view.SetTileEases(_variables.MarkedScaleUpEase, _variables.MarkedScaleDownEase);
 
             int tileId = 0;
             
