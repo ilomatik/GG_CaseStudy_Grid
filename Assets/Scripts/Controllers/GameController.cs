@@ -56,6 +56,8 @@ namespace Controllers
                     tileId++;
                 }
             }
+            
+            _view.ResizeTiles();
         }
 
         private void OnTileClicked(int col, int row)

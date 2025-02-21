@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using DG.Tweening;
 using Events;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace View
         [SerializeField] private Transform _tilesParent;
 
         private TileView[,] _tileViews;
+        private int         _colCount;
+        private int         _rowCount;
+        private Vector3     _tileScale;
         private float       _tileScaleUpDuration;
         private float       _tileScaleDownDuration;
         private Ease        _scaleUpEase;
@@ -17,10 +21,14 @@ namespace View
 
         public void Initialize(int colCount, int rowCount)
         {
-            _tileViews = new TileView[colCount, rowCount];
+            _colCount = colCount;
+            _rowCount = rowCount;
             
-            SetTileParentPosition(colCount, rowCount);
-            SetCameraPosition(colCount, rowCount);
+            _tileViews = new TileView[_colCount, _rowCount];
+            _tileScale = _tilePrefab.transform.localScale;
+            
+            SetTileParentPosition(_colCount, _rowCount);
+            SetCameraPosition(_colCount, _rowCount);
         }
         
         public void SetTileDurations(float tileScaleUpDuration, float tileScaleDownDuration)
@@ -45,7 +53,21 @@ namespace View
             tileView.SetDurations(_tileScaleUpDuration, _tileScaleDownDuration);
             tileView.SetEases(_scaleUpEase, _scaleDownEase);
             
+            tileView.transform.localScale = Vector3.zero;
             _tileViews[col, row] = tileView;
+        }
+
+        public async void ResizeTiles()
+        {
+            for (int c = 0; c < _colCount; c++)
+            {
+                for (int r = _rowCount - 1; r >= 0; r--)
+                {
+                    _tileViews[c, r].transform.DOScale(_tileScale, _tileScaleUpDuration).SetEase(_scaleUpEase);
+
+                    await Task.Delay(10);
+                }
+            }
         }
         
         public void MarkTile(int col, int row)
